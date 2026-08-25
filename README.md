@@ -1,25 +1,33 @@
 # Agent-Rider Operator Dashboard
 
-**L33tSaaS Labs · Smart Frame Certified · SFv1 · SF-1 · L/C/D**  
-**Status:** Claimed exclusive · Scaffold ready (2026-08-25)
+**L33tSaaS Labs · Claimed exclusive**
 
-## Idea
-Operator dashboard for Agent-Rider + CuNi health alerts.
-Single pane of glass for rider health, CuNi status, alerts, and fleet overview.
+Single operator dashboard for Agent-Rider + CuNi health alerts.
 
-Ties directly to live https://agentrider.fly.dev
+## Status
+- Exclusive claim locked
+- Production schema ready
+- Admin unlock ready
+- Core API routes live:
+  - `GET /api/health` — proxies Agent-Rider health
+  - `GET /api/agents`
+  - `GET /api/alerts`
+  - `POST /api/admin/unlock`
+- Next: wire Postgres, real agent list, basic dashboard UI
 
-## Stack
-- Next.js (App Router)
-- Postgres / Neon
-- Agent-Rider JWT / health endpoints
-- Admin unlock via owner code
+## Quick start
+```bash
+cp .env.example .env.local
+npm install
+psql $DATABASE_URL -f schema.sql
+npm run dev
+```
 
-## Admin unlock
-`POST /api/admin/unlock` with `{ "code": "..." }` → role=admin, plan=admin, billing_bypass=true
+## Env
+```
+DATABASE_URL=
+ADMIN_CODE=change-me-in-production
+AGENT_RIDER_URL=https://agentrider.fly.dev
+```
 
-## Schema
-See `schema.sql`
-
-## Blueprint origin
-From L33tSaaS pack `operator-dashboard-for-agent-rider-cuni-health-a` (claimed in saas-agent-vault).
+Live Agent-Rider target: https://agentrider.fly.dev
