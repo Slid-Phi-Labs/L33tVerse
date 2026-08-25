@@ -8,12 +8,13 @@ Single operator dashboard for Agent-Rider + CuNi health alerts.
 - Exclusive claim locked
 - Production schema ready
 - Admin unlock ready
-- Core API routes live:
-  - `GET /api/health` — proxies Agent-Rider health
-  - `GET /api/agents`
-  - `GET /api/alerts`
+- Core API routes:
+  - `GET /api/health` — live upstream check against Agent-Rider
+  - `GET /api/agents` — DB-backed with placeholder fallback
+  - `GET /api/alerts` — DB-backed
   - `POST /api/admin/unlock`
-- Next: wire Postgres, real agent list, basic dashboard UI
+- Dashboard UI showing health, agents, and alerts
+- Next: persist health checks, Slack alert routing, multi-fleet
 
 ## Quick start
 ```bash
@@ -23,11 +24,12 @@ psql $DATABASE_URL -f schema.sql
 npm run dev
 ```
 
+Open http://localhost:3000
+
 ## Env
 ```
 DATABASE_URL=
 ADMIN_CODE=change-me-in-production
 AGENT_RIDER_URL=https://agentrider.fly.dev
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
-
-Live Agent-Rider target: https://agentrider.fly.dev

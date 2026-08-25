@@ -1,10 +1,21 @@
 import { NextResponse } from "next/server";
+import { query } from "@/lib/db";
 
-/**
- * MVP alerts list.
- * Later: read from Postgres `alerts` table.
- */
 export async function GET() {
-  const alerts: any[] = [];
-  return NextResponse.json({ alerts, count: 0, unacknowledged: 0 });
+  const { rows, db } = await query(
+    `SELECT id, agent_id, severity, message, acknowledged, created_at
+     FROM alerts
+     ORDER BY created_at DESC
+     LIMIT 100`
+  );
+
+  const alerts = db ? rows : [];
+  const unacknowledged = alerts.filter((a: any) => !a.acknowledged).length;
+
+  return NextResponse.json({
+    alerts,
+    count: alerts.length,
+    unacknowledged,
+    source: db ? "db" : "placeholder",
+  });
 }
