@@ -1,0 +1,18 @@
+{
+  "name": "chaseflow-invoices",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "db:migrate": "psql $DATABASE_URL -f schema.sql"
+  },
+  "dependencies": {
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "stripe": "^16.0.0",
+    "pg": "^8.12.0"
+  }
+}
