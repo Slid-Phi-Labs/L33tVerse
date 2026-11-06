@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
+import { summarizeInvoices } from "@/lib/forecast";
 
 /** GET /api/forecast?workspace_id= — cash-flow from outstanding invoices */
 export async function GET(req: NextRequest) {
@@ -9,24 +10,15 @@ export async function GET(req: NextRequest) {
   }
 
   const { rows, db } = await query(
-    `SELECT
-       COALESCE(SUM(amount_cents) FILTER (WHERE status IN ('open','chasing')), 0)::bigint AS outstanding_cents,
-       COALESCE(SUM(amount_cents) FILTER (WHERE status = 'paid'), 0)::bigint AS paid_cents,
-       COUNT(*) FILTER (WHERE status IN ('open','chasing'))::int AS open_count,
-       COUNT(*) FILTER (WHERE status = 'paid')::int AS paid_count
-     FROM invoices
-     WHERE workspace_id = $1`,
+    `SELECT amount_cents, status FROM invoices WHERE workspace_id = $1`,
     [workspace_id]
   );
 
-  const r = db ? rows[0] : null;
+  const summary = summarizeInvoices(db ? rows : []);
 
   return NextResponse.json({
     workspace_id,
-    outstanding_cents: r ? Number(r.outstanding_cents) : 0,
-    paid_cents: r ? Number(r.paid_cents) : 0,
-    open_count: r ? Number(r.open_count) : 0,
-    paid_count: r ? Number(r.paid_count) : 0,
+    ...summary,
     source: db ? "db" : "placeholder",
   });
 }

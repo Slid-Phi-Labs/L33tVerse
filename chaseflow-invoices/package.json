@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "node --test tests/",
     "db:migrate": "psql $DATABASE_URL -f schema.sql"
   },
   "dependencies": {

@@ -6,7 +6,7 @@ it — repeat.
 
 | Part | Path | What it is |
 |---|---|---|
-| l33tsaas | `l33tsaas/` | The revolving supermarket for builders and agents (Fly deploy tree). |
+| l33tsaas | `l33tsaas/` | The revolving supermarket for builders and agents (Fly deploy tree). HONEST STATUS: hollow shell — README + Dockerfile only, no `store/` tree yet. |
 | l33tsaas-starter | `l33tsaas-starter/` | Shared starter template: Next.js 14 + Neon-ready schema + Stripe + admin unlock. |
 | chaseflow-invoices | `chaseflow-invoices/` | Automated polite multi-channel invoice chasing + payment links + cash-flow forecast. |
 | agent-rider-operator | `agent-rider-operator/` | Operator dashboard for Agent-Rider + CuNi health alerts. |

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
+import { buildChaseSchedule } from "@/lib/chase";
 
 /**
  * POST /api/chase — start a simple 3-step chase sequence for an invoice
@@ -13,35 +14,24 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "invoice_id required" }, { status: 400 });
   }
 
-  const steps = [
-    { step: 1, channel: "email", delay_days: 0 },
-    { step: 2, channel: "email", delay_days: 3 },
-    { step: 3, channel: "email", delay_days: 7 },
-  ];
+  const schedule = buildChaseSchedule(invoice_id);
 
   const created: any[] = [];
   let dbOk = false;
 
-  for (const s of steps) {
-    const scheduled = new Date();
-    scheduled.setDate(scheduled.getDate() + s.delay_days);
-
+  for (const s of schedule) {
     const { rows, db } = await query(
       `INSERT INTO chase_sequences (invoice_id, step, channel, scheduled_at, status)
        VALUES ($1, $2, $3, $4, 'pending')
        RETURNING id, invoice_id, step, channel, scheduled_at, status, created_at`,
-      [invoice_id, s.step, s.channel, scheduled.toISOString()]
+      [invoice_id, s.step, s.channel, s.scheduled_at]
     );
     dbOk = db;
     if (db && rows[0]) created.push(rows[0]);
     else {
       created.push({
         id: `mem-${s.step}-${Date.now()}`,
-        invoice_id,
-        step: s.step,
-        channel: s.channel,
-        scheduled_at: scheduled.toISOString(),
-        status: "pending",
+        ...s,
       });
     }
   }
