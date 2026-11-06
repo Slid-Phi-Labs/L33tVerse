@@ -1,0 +1,23 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  node:
+    name: node suites (chaseflow + l33tsaas)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: chaseflow-invoices tests
+        working-directory: chaseflow-invoices
+        run: npm test
+      - name: l33tsaas catalog tests
+        working-directory: l33tsaas
+        run: npm test
+      - name: syntax check changed server files
+        run: node --check l33tsaas/lib/server.js
