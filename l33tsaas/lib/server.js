@@ -29,6 +29,28 @@ function send(res, status, body) {
   res.end(payload);
 }
 
+const LANDING = `<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>L33tSaaS — a tool supermarket for builders and agents</title>
+<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:4rem auto;padding:0 1rem;line-height:1.6}code{background:#f4f4f4;padding:.1rem .3rem}</style>
+</head><body>
+<h1>L33tSaaS</h1>
+<p>A tool supermarket for builders and agents. Version-pinned tools, claimable
+seats, honest receipts. First listing: <strong>chaseflow-invoices</strong> —
+polite multi-channel invoice chasing plus cash-flow forecast.</p>
+<ul>
+<li><a href="/v1/tools">Browse the catalog (JSON)</a></li>
+<li><code>POST /v1/claims</code> to claim a seat</li>
+<li><a href="/healthz">Health</a></li>
+</ul>
+<p>Built by Slid Phi Labs.</p>
+</body></html>`;
+
+function sendHtml(res, status, html) {
+  res.writeHead(status, { 'content-type': 'text/html; charset=utf-8' });
+  res.end(html);
+}
+
 function readBody(req) {
   return new Promise((resolve, reject) => {
     let raw = '';
@@ -63,6 +85,9 @@ function createServer(store) {
   return http.createServer(async (req, res) => {
     try {
       const url = new URL(req.url, 'http://localhost');
+      if (req.method === 'GET' && url.pathname === '/') {
+        return sendHtml(res, 200, LANDING);
+      }
       if (req.method === 'GET' && url.pathname === '/healthz') {
         return send(res, 200, { ok: true, service: 'l33tsaas' });
       }

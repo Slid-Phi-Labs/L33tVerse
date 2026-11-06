@@ -36,6 +36,15 @@ describe('server — health, tools, claims', () => {
     assert.deepEqual(await res.json(), { ok: true, service: 'l33tsaas' });
   });
 
+  it('serves a landing page at /', async () => {
+    const res = await fetch(`${base}/`);
+    assert.equal(res.status, 200);
+    assert.match(res.headers.get('content-type'), /text\/html/);
+    const html = await res.text();
+    assert.match(html, /L33tSaaS/);
+    assert.match(html, /\/v1\/tools/);
+  });
+
   it('lists tools and resolves a pinned version', async () => {
     const list = await fetch(`${base}/v1/tools`);
     assert.equal(list.status, 200);
