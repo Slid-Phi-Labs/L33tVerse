@@ -1,7 +1,7 @@
 # No chaseflow deploy pattern exists in this repo (no fly.toml anywhere
 # at the time of writing), so this is a minimal standalone Fly config
 # for the l33tsaas Node service (listens on $PORT, default 8080).
-app = "l33tsaas"
+app = "spl-l33tsaas"
 
 # Change to your nearest region before first deploy (fly regions list).
 primary_region = "ord"
