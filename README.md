@@ -6,7 +6,7 @@ it — repeat.
 
 | Part | Path | What it is |
 |---|---|---|
-| l33tsaas | `l33tsaas/` | The revolving supermarket for builders and agents (Fly deploy tree). HONEST STATUS: hollow shell — README + Dockerfile only, no `store/` tree yet. |
+| l33tsaas | `l33tsaas/` | The revolving supermarket for builders and agents (Fly deploy tree). HONEST STATUS: minimal real core (v0.1) — tool registry with version pinning + JSON file store, workspace claim flow with plan gate, stdlib HTTP service, `node:test` suite green; Dockerfile now matches the files present and `fly.toml` is new/undeployed. Still scaffold: single seeded catalog entry, JSON-file persistence only, no UI, no billing. |
 | l33tsaas-starter | `l33tsaas-starter/` | Shared starter template: Next.js 14 + Neon-ready schema + Stripe + admin unlock. |
 | chaseflow-invoices | `chaseflow-invoices/` | Automated polite multi-channel invoice chasing + payment links + cash-flow forecast. |
 | agent-rider-operator | `agent-rider-operator/` | Operator dashboard for Agent-Rider + CuNi health alerts. |

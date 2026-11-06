@@ -1,0 +1,13 @@
+{
+  "name": "l33tsaas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "L33tSaaS supermarket core: tool registry + workspace claim flow",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node lib/server.js",
+    "test": "node --test tests/"
+  }
+}
