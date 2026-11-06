@@ -8,6 +8,6 @@
   },
   "scripts": {
     "start": "node lib/server.js",
-    "test": "node --test tests/"
+    "test": "node --test tests/*.test.js"
   }
 }
