@@ -21,3 +21,11 @@ jobs:
         run: npm test
       - name: syntax check changed server files
         run: node --check l33tsaas/lib/server.js
+      - name: install chaseflow deps (for probe spawn)
+        working-directory: chaseflow-invoices
+        run: npm ci --no-audit --no-fund
+      - name: build chaseflow (for probe spawn)
+        working-directory: chaseflow-invoices
+        run: npm run build
+      - name: readiness probe (localhost, servers spawned by the script)
+        run: node scripts/readiness-probe.mjs --spawn

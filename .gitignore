@@ -1,0 +1,18 @@
+# dependencies
+node_modules/
+
+# next.js (chaseflow-invoices)
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# local env (examples like *.env.example stay tracked)
+.env.local
+.env.*.local
+
+# l33tsaas runtime JSON store (seeded automatically on boot)
+l33tsaas/data/
+
+# logs
+npm-debug.log*
