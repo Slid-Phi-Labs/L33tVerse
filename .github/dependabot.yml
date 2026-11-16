@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/agent-rider-operator"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/chaseflow-invoices"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/l33tsaas"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "npm"
+    directory: "/l33tsaas-starter"
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
